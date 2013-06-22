@@ -15,6 +15,8 @@
 			</select>			
 		";
 	}
+	
+	$_SESSION['player']->refresh();
 ?>
 <!DOCTYPE html>
 <html>

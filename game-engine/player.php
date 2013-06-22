@@ -73,6 +73,10 @@ class Player {
 		}
 	}
 	
+	public function refresh() {
+		$this->getAllSeries();
+	}
+	
 	public function submitTurn($seriesId, Turn $turn) {
 		try {
 			$dbConn = new PDO('mysql:host=localhost;dbname=rpshack', 'root', 'root');
@@ -95,6 +99,7 @@ class Player {
 		
 		if ($sqlComplete->fetchColumn() == 0) {
 			$play = new Simulation($seriesId);
+			$this->getAllSeries();
 		}
 	}		
 }
