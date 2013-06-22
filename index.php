@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if(!isset($_SESSION['player'])) {
+	if(!isset($_SESSION['username'])) {
 		header("Location: login.php");
 	}
 
@@ -24,7 +24,7 @@
 <form name="game" action="result.php" method="post">
 	<h1>RPS Test</h1>
 	<div id="player1" class="player">
-			<h2><?=$_SESSION['player']?></h2>
+			<h2><?=$_SESSION['username']?></h2>
 			<ol>
 				<li><?=createDropDown("player1-1")?></li>
 				<li><?=createDropDown("player1-2")?></li>

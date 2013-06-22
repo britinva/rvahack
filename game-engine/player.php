@@ -1,21 +1,18 @@
 <?php
 class Player {
 
-	private $dbConn;
-	private $playerId;
-	private $playerName;
+	private $playerID;
+	protected $playerName;
 
-	function __construct() {
+
+	public function login ($username, $password) {
 		try {
-			$this->dbConn = new PDO('mysql:host=localhost;dbname=rpshack', 'root', 'root');
-			$this->dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$dbConn = new PDO('mysql:host=localhost;dbname=rpshack', 'root', 'root');
+			$dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
-	}
-
-	public function login ($username, $password) {
-		$login = $this->dbConn->prepare("SELECT * FROM Players WHERE playerName = :playerName AND password = :password");
+		$login = $dbConn->prepare("SELECT playerName FROM Players WHERE playerName = :playerName AND password = :password");
 		$login->bindValue(':playerName', $username, PDO::PARAM_STR);
 		$login->bindValue(':password', $password, PDO::PARAM_STR);
 		$login->execute();
@@ -23,19 +20,11 @@ class Player {
 		$rows = $login->rowCount();
 		if ($rows == 1) {
 			$row = $login->fetch();
-			$this->playerId = $row["playerId"];
-			$this->playerName = $row["playerName"];
-			$_SESSION['username'] = $this->playerName;
+			$_SESSION['username'] = $row["playerName"];
 			return true;		
 		}  else {
 			return false;
-		}			
+		}
+			
 	}
-	
-	
-	private function getSeries() {
-		$getSeries = $this->dbConn->prepare("SELECT * FROM PlayerSeries WHERE playerId = :playerId");
-	}
-	
-	
 }
