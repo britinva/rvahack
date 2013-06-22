@@ -5,7 +5,10 @@ include_once("game-engine/player.php");
 if (isset($_POST['username'])) {
 	$me = new Player();
 	if ($me->login($_POST['username'], $_POST['password'])) {
-		header("Location: index.php");		
+		$_SESSION["player"] = $me;
+		header("Location: /index.php");
+exit;
+			
 	} else {
 		$errorMsg = "Username/Password not found.";
 	}
@@ -16,6 +19,7 @@ if (isset($_POST['username'])) {
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 	<title>Log In</title>
 </head>
 <body>

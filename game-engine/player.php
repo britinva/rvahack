@@ -1,8 +1,11 @@
 <?php
 class Player {
 
-	private $playerID;
-	protected $playerName;
+	private $playerId;
+	private $playerName;
+
+	function __construct() {
+	}
 
 
 	public function login ($username, $password) {
@@ -12,7 +15,8 @@ class Player {
 		} catch (PDOException $e) {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
-		$login = $dbConn->prepare("SELECT playerName FROM Players WHERE playerName = :playerName AND password = :password");
+
+		$login = $dbConn->prepare("SELECT playerId, playerName FROM Players WHERE playerName = :playerName AND password = :password");
 		$login->bindValue(':playerName', $username, PDO::PARAM_STR);
 		$login->bindValue(':password', $password, PDO::PARAM_STR);
 		$login->execute();
@@ -20,11 +24,24 @@ class Player {
 		$rows = $login->rowCount();
 		if ($rows == 1) {
 			$row = $login->fetch();
-			$_SESSION['username'] = $row["playerName"];
+			//print_r($row);
+			$this->playerId = $row["playerId"];
+			$this->playerName = $row["playerName"];
 			return true;		
 		}  else {
 			return false;
 		}
 			
 	}
+	
+	
+	public function getName() {
+		return $this->playerName;
+	}
+
+	public function getId() {
+		return $this->playerId;
+	}
+	
+	
 }
