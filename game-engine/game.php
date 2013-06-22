@@ -31,5 +31,7 @@ class Game {
 	
 }
 
+echo "<h1>Game Tests</h1>"
+
 $match1 = new Game();
 $match1->playGame();
