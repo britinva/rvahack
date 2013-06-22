@@ -4,9 +4,9 @@ include_once("game.php");
 class Simulation {
 
 	public $numRounds;
-	protected $team1picks = array();
-	protected $team2picks;
-	protected $score = array();
+	//protected $team1picks = array();
+	//protected $team2picks;
+	protected $final = array();
 	
 	function __construct($seriesId) {
 		try {
@@ -46,21 +46,45 @@ class Simulation {
 		$sqlPutScore->execute();
 
 
-		/* Update Record & Reset Moves
+		/* Update Record & Reset Moves */
 
-		$sqlEndTurn = "UPDATE PlayerSeries SET ";
-		if () {
-			$sqlEndTurn .= "wins = wins + 1, ";
-		} else if () {
-			$sqlEndTurn .= "losses = losses + 1, ";
+		$updatesql = "UPDATE PlayerSeries SET ";
+		if ($final[0] > $final[1]) {
+			$updatesql .= "wins = wins + 1, ";
+		} else if ($final[0] < $final[1]) {
+			$updatesql .= "losses = losses + 1, ";
 		} else {
-			$sqlEndTurn .= "ties = ties + 1, ";
+			$updatesql .= "ties = ties + 1, ";
 		}
-		$sqlEndTurn .= "lastTurn = nextTurn, ";
-		$sqlEndTurn .= "nextTurn = NULL ";
-		$sqlEndTurn .= "WHERE playerId = 1 ";
-		$sqlEndTurn .= "AND seriesId = 1";
-*/
+		$updatesql .= "lastTurn = nextTurn, ";
+		$updatesql .= "nextTurn = NULL ";
+		$updatesql .= "WHERE playerId = :player1Id ";
+		$updatesql .= "AND seriesId = :seriesId";
+
+		$sqlEndTurn = $dbConn->prepare($updatesql);
+		$sqlEndTurn->bindParam(":player1Id", $player[0]);
+		$sqlEndTurn->bindParam(":seriesId", $seriesId);
+		$sqlEndTurn->execute();
+
+		$updatesql = "UPDATE PlayerSeries SET ";
+		if ($final[1] > $final[0]) {
+			$updatesql .= "wins = wins + 1, ";
+		} else if ($final[1] < $final[0]) {
+			$updatesql .= "losses = losses + 1, ";
+		} else {
+			$updatesql .= "ties = ties + 1, ";
+		}
+		$updatesql .= "lastTurn = nextTurn, ";
+		$updatesql .= "nextTurn = NULL ";
+		$updatesql .= "WHERE playerId = :player1Id ";
+		$updatesql .= "AND seriesId = :seriesId";
+
+		$sqlEndTurn = $dbConn->prepare($updatesql);
+		$sqlEndTurn->bindParam(":player1Id", $player[1]);
+		$sqlEndTurn->bindParam(":seriesId", $seriesId);
+		$sqlEndTurn->execute();
+
+
 	}	
 }
 

@@ -43,7 +43,7 @@
 <body>
 	<h1><span class="rock">Rock</span> <span class="paper">Paper</span> <span class="scissors">Scissors</span></h1>
 	<h2><?=$thisSeries->getName()?></h2>
-	<form name="picks" action="result.php" method="POST">
+	<form name="picks" action="submit.php" method="POST">
 		<input type="hidden" name="seriesid" value="<?=$id?>" />
 		<div class="picks">	
 			<h3>Round 1</h3>
