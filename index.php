@@ -25,6 +25,12 @@
 <body>
 <form name="game" action="result.php" method="post">
 	<h1>RPS Test</h1>
+	<div>
+		Your Series:
+		<?=$_SESSION["player"]->showSeries()?>
+	</div>
+	
+	
 	<div id="player1" class="player">
 			<h2><?=$_SESSION["player"]->getName()?> (<?=$_SESSION["player"]->getId()?>)</h2>
 			<ol>
