@@ -24,10 +24,3 @@ class Game {
 	
 }
 
-echo "<h1>Game Tests</h1>";
-
-$player1 = new Turn("rock", "paper", "scissors");
-$player2 = new Turn("paper", "scissors", "paper");
-
-$game1 = new Game($player1, $player2);
-$game1->playGame();
