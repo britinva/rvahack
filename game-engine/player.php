@@ -3,7 +3,7 @@ class Player {
 
 	private $playerId;
 	private $playerName;
-	private $allSeries = array();
+	public $allSeries = array();
 
 	function __construct() {
 	}
@@ -51,7 +51,6 @@ class Player {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
 		
-//		$sqlSeries = $dbConn->prepare("SELECT seriesId FROM PlayerSeries WHERE playerId = :playerId");
 		$sqlSeries = $dbConn->prepare("SELECT PlayerSeries.seriesId AS sid, seriesName, isReady, Wins, Losses, Ties FROM PlayerSeries, Series 
 		WHERE PlayerSeries.seriesId = Series.SeriesId
 		AND playerId = :playerId");
@@ -60,7 +59,7 @@ class Player {
 		$sqlSeries->bindValue(':playerId', $this->playerId);
 		$sqlSeries->execute();
 
-		unset($this->allSeries);
+		unset($this->allSeries); // this is wasteful
 		while ($row = $sqlSeries->fetch(PDO::FETCH_ASSOC)) {
 			$this->allSeries[] = $row;
 		}
@@ -73,7 +72,19 @@ class Player {
 		}
 	}
 	
-	
-	
-	
+	public function submitTurn($seriesId, Turn $turn) {
+		try {
+			$dbConn = new PDO('mysql:host=localhost;dbname=rpshack', 'root', 'root');
+			$dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		} catch (PDOException $e) {
+			echo 'Connection failed: ' . $e->getMessage();
+		}
+		$updatesql = "UPDATE PlayerSeries SET nextTurn = :turn WHERE playerId = :playerId AND seriesId = :seriesId";
+		$query = $dbConn->prepare($updatesql);
+		$query->bindParam(":turn", serialize($turn));
+		$query->bindParam(":playerId", $this->playerId);
+		$query->bindParam(":seriesId", $seriesId);
+		$query->execute();
+	}
+		
 }

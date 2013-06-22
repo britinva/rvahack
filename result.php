@@ -1,12 +1,14 @@
 <?php
 include_once("game-engine/game.php");
+include_once("game-engine/player.php");
+session_start();
 
-echo "<h1>Result</h1>";
+echo "<h1>Submitting Move</h1>";
 
-$player1 = new Turn($_POST["player1-1"], $_POST["player1-2"], $_POST["player1-3"]);
-$player2 = new Turn($_POST["player2-1"], $_POST["player2-2"], $_POST["player2-3"]);
+$move = new Turn($_POST["move1"], $_POST["move2"], $_POST["move3"]);
+$_SESSION["player"]->submitTurn($_POST["seriesid"], $move);
 
-$game1 = new Game($player1, $player2);
-$game1->playGame();
+//$game1 = new Game($player1, $player2);
+//$game1->playGame();
 
 ?>

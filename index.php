@@ -23,22 +23,28 @@
 	<title>RPS: Test</title>
 </head>
 <body>
-<form name="game" action="result.php" method="post">
+<form name="game" action="result.php" method="POST">
 	<h1>RPS Test</h1>
-	<div>
+	<!--div>
 		Your Series:
 		<?=$_SESSION["player"]->showSeries()?>
-	</div>
+	</div-->
 	
 	
 	<div id="player1" class="player">
-			<h2><?=$_SESSION["player"]->getName()?> (<?=$_SESSION["player"]->getId()?>)</h2>
-			<ol>
-				<li><?=createDropDown("player1-1")?></li>
-				<li><?=createDropDown("player1-2")?></li>
-				<li><?=createDropDown("player1-3")?></li>
-			</ol>
-			<input type="submit" />
+		<h2><?=$_SESSION["player"]->getName()?> (<?=$_SESSION["player"]->getId()?>)</h2>
+		<select name="seriesid">
+			<option value="">Select Series</option>
+			<?php foreach ($_SESSION["player"]->allSeries as $series):?>
+				<option value="<?=$series["sid"]?>"><?=$series["seriesName"]?></option>
+			<?php endforeach;?>
+		</select>
+		<ol>
+			<li><?=createDropDown("move1")?></li>
+			<li><?=createDropDown("move2")?></li>
+			<li><?=createDropDown("move3")?></li>
+		</ol>
+		<input type="submit" />
 	</div>
 </form>
 <p><a href="logout.php">Logout</a></p>
