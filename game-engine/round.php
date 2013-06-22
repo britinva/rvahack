@@ -12,35 +12,35 @@ class Round {
 	public function playRound() {
 		if ($this->card1 == "scissors") {
 			if ($this->card2 == "rock") {
-				echo "card2 wins";				
+				return array (0, 1);
 			}
 			else if ($this->card2 == "paper") {
-				echo "card1 wins";
+				return array (1, 0);
 			}
 			else {
-				echo "tie";
+				return array (0, 0);
 			}
 		}
 		else if ($this->card1 == "paper") {
 			if ($this->card2 == "rock") {
-				echo "card1 wins";				
+				return array (1, 0);
 			}
 			else if ($this->card2 == "scissors") {
-				echo "card2 wins";
+				return array (0, 1);
 			}
 			else {
-				echo "tie";
+				return array (0, 0);
 			}		
 		}
 		else if ($this->card1 == "rock") {
-			if ($this->card2 == "paper") {
-				echo "card2 wins";				
+			if ($this->card2 == "scissors") {
+				return array (1, 0);
 			}
-			else if ($this->card2 == "scissors") {
-				echo "card1 wins";
+			else if ($this->card2 == "paper") {
+				return array (0, 1);
 			}
 			else {
-				echo "tie";
+				return array (0, 0);
 			}		
 		}
 	}
