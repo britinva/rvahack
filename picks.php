@@ -1,5 +1,6 @@
 <?php
 	include_once("game-engine/player.php");
+	include_once("game-engine/series.php");
 	session_start();
 
 	if(!isset($_SESSION['player'])) {
@@ -15,7 +16,12 @@
 			</select>			
 		";
 	}
+
+	$id = $_GET["series"];
+	$thisSeries = new series($id, $_SESSION['player']->getId());
+	//print_r($_SESSION['player']->allSeries);
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,27 +29,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>RPS+</title>
     <link rel="stylesheet" href="views/css/theme.css">
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/rps.js"></script>
 </head>
 <body>
-
 	<h1><span class="rock">Rock</span> <span class="paper">Paper</span> <span class="scissors">Scissors</span></h1>
+	<h2>Series 1 vs Avery</h2>
+	<form>
+		<input type="hidden" name="seriesid" value="<?=$id?>" />
+		<div class="picks">	
+			<h3>Round 1</h3>
+			<div class="card" id="pick1">
+				<?=createDropDown("move1")?>
+			</div>
 
-	<h2>Existing Games</h2>
-	<ul class="listview">
-		<?php foreach ($_SESSION["player"]->allSeries as $series):?>
-		<li class="ready"><a href="picks.php?series=<?=$series["sid"]?>">
-			<?=$series["seriesName"]?>
-			<span>(<?=$series["Wins"]?>-<?=$series["Losses"]?>-<?=$series["Ties"]?>)</span>
-		</a></li>
-		<?php endforeach;?>
-	</ul>	
+			<h3>Round 2</h3>
+			<div class="card" id="pick2">
+				<?=createDropDown("move2")?>
+			</div>
 	
-	<h2>New Challenge</h2>		
-	<ul class="listview">
-		<li><a href="#">Invite a Friend</a></li>
-	</ul>		
+			<h3>Round 3</h3>
+			<div class="card" id="pick3">
+				<?=createDropDown("move3")?>
+			</div>
 		
-
-	<p style="float: right; margin-right: 10px;"><a href="logout.php">Logout</a></p>
+			<input type="submit" value="Save Picks">
+		</div>
+	</form>		
 </body>
 </html>

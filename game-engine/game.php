@@ -26,6 +26,7 @@ class Game {
 		}
 		echo "Final Score: ";
 		echo $this->score[0]." - ".$this->score[1];
+		return array($this->score[0], $this->score[1]);
 	}
 	
 }

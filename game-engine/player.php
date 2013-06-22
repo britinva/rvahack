@@ -1,12 +1,11 @@
 <?php
+include_once("simulation.php");
+
 class Player {
 
 	private $playerId;
 	private $playerName;
 	public $allSeries = array();
-
-	function __construct() {
-	}
 
 
 	public function login ($username, $password) {
@@ -93,11 +92,7 @@ class Player {
 		$sqlComplete->execute();
 		
 		if ($sqlComplete->fetchColumn() == 0) {
-			echo "Let's Play!";
-		} else {
-			echo "Still Waiting";
+			$play = new Simulation($seriesId);
 		}
-
-	}
-		
+	}		
 }
