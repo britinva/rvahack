@@ -40,9 +40,8 @@
 		<?php endforeach;?>
 	</ul>	
 	
-	<h2>New Challenge</h2>		
 	<ul class="listview">
-		<li><a href="#">Invite a Friend</a></li>
+		<li><a href="challenge.php">Challenge a Friend</a></li>
 	</ul>		
 
 	<p style="float: right; margin-right: 10px;"><a href="logout.php">Logout</a></p>

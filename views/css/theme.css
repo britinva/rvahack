@@ -46,6 +46,20 @@ h1 .scissors {
 	border-radius: 10px;
 	max-width: 500px;
 }
+
+.login h2 {
+	margin: 0;
+	padding: 0 2% 0;
+}
+
+.login select {
+	width: 96%;
+	margin: 2%;
+	height: 2em;
+	line-height: 2em;
+	font-size: 1.2em;	
+}
+
 .sign-up {
 	margin: 0 auto;
 	text-align: right;
