@@ -80,11 +80,24 @@ class Player {
 			echo 'Connection failed: ' . $e->getMessage();
 		}
 		$updatesql = "UPDATE PlayerSeries SET nextTurn = :turn WHERE playerId = :playerId AND seriesId = :seriesId";
-		$query = $dbConn->prepare($updatesql);
-		$query->bindParam(":turn", serialize($turn));
-		$query->bindParam(":playerId", $this->playerId);
-		$query->bindParam(":seriesId", $seriesId);
-		$query->execute();
+		$sqlTurn = $dbConn->prepare($updatesql);
+		$sqlTurn->bindParam(":turn", serialize($turn));
+		$sqlTurn->bindParam(":playerId", $this->playerId);
+		$sqlTurn->bindParam(":seriesId", $seriesId);
+		$sqlTurn->execute();
+		
+		// check to see if all players have submitted turns for this series
+		$selectsql = "SELECT * FROM PlayerSeries WHERE seriesId = :seriesId AND nextTurn IS NULL";
+		$sqlComplete = $dbConn->prepare($selectsql);
+		$sqlComplete->bindParam(":seriesId", $seriesId);
+		$sqlComplete->execute();
+		
+		if ($sqlComplete->fetchColumn() == 0) {
+			echo "Let's Play!";
+		} else {
+			echo "Still Waiting";
+		}
+
 	}
 		
 }
