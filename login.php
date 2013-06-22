@@ -1,26 +1,14 @@
 <?php
 session_start();
+include_once("game-engine/player.php");
+
 if (isset($_POST['username'])) {
-	try {
-		$dbConn = new PDO('mysql:host=localhost;dbname=rpshack', 'root', 'root');
-		$dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	} catch (PDOException $e) {
-		echo 'Connection failed: ' . $e->getMessage();
-	}
-	$login = $dbConn->prepare("SELECT playerName FROM Players WHERE playerName = :playerName AND password = :password");
-	$login->bindValue(':playerName', $_POST['username'], PDO::PARAM_STR);
-	$login->bindValue(':password', $_POST['password'], PDO::PARAM_STR);
-	$login->execute();
-	
-	$rows = $login->rowCount();
-	if ($rows == 1) {
-		$row = $login->fetch();
-		$_SESSION['username'] = $row["playerName"];
+	$me = new Player();
+	if ($me->login($_POST['username'], $_POST['password'])) {
 		header("Location: index.php");		
-	}  else {
+	} else {
 		$errorMsg = "Username/Password not found.";
 	}
-
 }
 
 
