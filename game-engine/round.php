@@ -1,5 +1,5 @@
 <?php
-class Matchup {
+class Round {
 
 	protected $card1;
 	protected $card2;
@@ -46,5 +46,3 @@ class Matchup {
 	}
 }
 
-$round1 = new Matchup("rock", "paper");
-$round1->playRound();
