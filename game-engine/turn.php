@@ -15,7 +15,7 @@ class Turn {
 		return $this->selections[$x];
 	}
 }
-
+/*
 echo "<h1>Turn Tests</h1>";
 
 $player1 = new Turn("rock", "paper", "scissors");
@@ -35,3 +35,4 @@ echo "<br>";
 echo $player2->getTurn(2);
 echo "<br>";
 
+*/
