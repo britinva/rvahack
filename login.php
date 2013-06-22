@@ -9,6 +9,7 @@ if (isset($_POST['username'])) {
 	} else {
 		$errorMsg = "Username/Password not found.";
 	}
+
 }
 
 
