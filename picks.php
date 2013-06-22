@@ -19,7 +19,6 @@
 
 	$id = $_GET["series"];
 	$thisSeries = new series($id, $_SESSION['player']->getId());
-	//print_r($_SESSION['player']->allSeries);
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +30,20 @@
     <link rel="stylesheet" href="views/css/theme.css">
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/rps.js"></script>
+	<script>
+	<?php
+		if (isset($thisSeries->getPick)) {
+			echo "var picks = [\"".$thisSeries->getPick(0)."\", \"".$thisSeries->getPick(1)."\", \"".$thisSeries->getPick(2)."\"];";
+		} else {
+			echo "var picks = [\"rock\", \"rock\", \"rock\"];";
+		}
+	?>
+	</script>
 </head>
 <body>
 	<h1><span class="rock">Rock</span> <span class="paper">Paper</span> <span class="scissors">Scissors</span></h1>
-	<h2>Series 1 vs Avery</h2>
-	<form>
+	<h2><?=$thisSeries->getName()?></h2>
+	<form name="picks" action="result.php" method="POST">
 		<input type="hidden" name="seriesid" value="<?=$id?>" />
 		<div class="picks">	
 			<h3>Round 1</h3>

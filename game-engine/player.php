@@ -27,6 +27,8 @@ class Player {
 			//print_r($row);
 			$this->playerId = $row["playerId"];
 			$this->playerName = $row["playerName"];
+			$this->getAllSeries();
+			
 			return true;		
 		}  else {
 			return false;

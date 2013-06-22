@@ -30,7 +30,7 @@
 
 	<h2>Existing Games</h2>
 	<ul class="listview">
-		<?php foreach ($_SESSION["player"]->allSeries as $series):?>
+		<?php foreach($_SESSION["player"]->allSeries as $series):?>
 		<li class="ready"><a href="picks.php?series=<?=$series["sid"]?>">
 			<?=$series["seriesName"]?>
 			<span>(<?=$series["Wins"]?>-<?=$series["Losses"]?>-<?=$series["Ties"]?>)</span>
@@ -42,7 +42,6 @@
 	<ul class="listview">
 		<li><a href="#">Invite a Friend</a></li>
 	</ul>		
-		
 
 	<p style="float: right; margin-right: 10px;"><a href="logout.php">Logout</a></p>
 </body>
